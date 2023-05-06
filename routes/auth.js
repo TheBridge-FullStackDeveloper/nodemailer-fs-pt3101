@@ -4,6 +4,8 @@ router.post("/signup", async (req, res) => {
   const { name, password, email } = req.body;
 
   const pool = await db;
+  
+  /* Password must be hashed before save it! */
 
   try {
     await pool.query(sql.unsafe`
