@@ -3,6 +3,17 @@ require("dotenv").config;
 
 async function main({ email }) {
   let testAccount = await nodemailer.createTestAccount();
+  
+  let transporter = nodemailer.createTransport({
+    port: 587,
+    secure: false, // true for 465, false for other ports
+    auth: {
+      user: testAccount.user, // generated ethereal user
+      pass: testAccount.pass, // generated ethereal password
+    },
+  });
+  
+  /* if we want to use ethereal for development we need to add host: "smtp.ethereal.email" and remove service */
 
   let transporter = nodemailer.createTransport({
     service: "gmail",
@@ -10,7 +21,7 @@ async function main({ email }) {
     port: 587,
     secure: false, // true for 465, false for other ports
     auth: {
-      user: process.env.EMAIL_USER, // generated ethereal user
+      user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASS,
     },
   });
